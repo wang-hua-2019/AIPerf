@@ -45,6 +45,7 @@ from dataset import create_dataset2 as create_dataset
 from CrossEntropySmooth import CrossEntropySmooth
 from lr_generator import get_lr, warmup_cosine_annealing_lr
 
+from resnet import resnet50 as resnet
 # set the logger format
 log_format = "%(asctime)s %(message)s"
 logging.basicConfig(
@@ -205,7 +206,8 @@ def mds_train_eval(q, hyper_params, receive_config, dataset_path_train, dataset_
     t3 = time.time()
 
     # build net
-    net = build_graph_from_json(receive_config, hyper_params)
+    # net = build_graph_from_json(receive_config, hyper_params)
+    net = resnet(class_num=1001)
     t4 = time.time()
 
     # init weight
