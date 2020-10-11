@@ -498,6 +498,16 @@ if __name__ == "__main__":
             f.write("duration=" + str(time.time() - example_start_time) + "\n")
             f.write("best_acc=" + str(best_final) + "\n")
 
+        # add npu restart operation
+        import subprocess
+        npu_set_cmd = "npu-smi set -t reset -i 0 -c 0"
+        npu_set_process = subprocess.Popen(npu_set_cmd, shell=True, stdin=subprocess.PIPE)
+        time.sleep(2)
+        answer_cmd = "y\n"
+        npu_set_process.communicate(answer_cmd.encode())
+        if npu_set_process.returncode == 0:
+            print('reset npu reset')
+
     except Exception as exception:
         logger.exception(exception)
         raise
